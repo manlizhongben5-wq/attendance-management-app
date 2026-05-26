@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>機能選択ダッシュボード</title>
+
+  <!-- 参照CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <!-- 認証JS -->
+  <script src="../../assets/js/common/auth.js" defer></script>
+  <script src="../../assets/js/common/login.js" defer></script>
+
+   <!-- ページ固有JS -->
+  <script src="../../assets/js/pages/teacher_dashboard.js" defer></script>
+
+</head>
+
+<body class="role-teacher page-dashboard">
+
+  <header class="app-header">
+
+    <!-- 左の戻る矢印 -->
+    <button class="back-btn" type="button" aria-label="戻る">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M14.5 5.5L8 12l6.5 6.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <h1 class="app-title">出欠管理システム</h1>
+
+    <!-- 右側エリア -->
+    <div class="header-right">
+      <div id="login-name" class="login-name">ログイン名</div>
+      <button id="logout-btn" class="logout-btn" type="button">ログアウト</button>
+    </div>
+  </header>
+
+<!-- メイン -->
+<main class="page">
+    <div class="page-top">
+      <h2 class="page-title">機能選択ダッシュボード</h2>
+    </div>
+
+    <div class="menu-area">
+
+        <a href="teacher_check-attendance.html" class="menu-btn">
+            全体出欠画面(参照)
+        </a>
+ 
+        <div class="edit-row">
+            <a href="teacher_record-attendance.html" id="edit-attendance-btn" class="menu-btn">
+                全体出欠画面(編集)
+            </a>
+
+            <span class="editing-text" style="display:none; color:red; font-size:0.8rem; margin-top:5px;">
+                <!-- 〇〇先生編集中 ↑は勝手にcssをhtmlに入れています -->
+            </span>
+        </div>
+
+        <a href="teacher_check-subject.html" class="menu-btn">
+            教科別確認画面
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

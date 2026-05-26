@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>出欠管理システム</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family: "Segoe UI", sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:600px;
+    margin:80px auto;
+    text-align:center;
+}
+
+h1{
+    font-size:42px;
+    margin-bottom:40px;
+}
+
+.menu{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+.card{
+    display:block; 
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    text-decoration:none;
+    color:#333;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.card:hover{
+    background:#f0f0f0;
+}
+
+.card a{
+    text-decoration:none;
+    font-size:20px;
+    color:#333;
+    font-weight:bold;
+}
+.ex{
+    display:block; 
+    background:yellow;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    text-decoration:none;
+    color:#333;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+    出欠管理システム<br>
+    (開発用ダッシュボード)<br>
+</h1>
+
+<div class="menu">
+
+<a href="pages/teacher/teacher.html" class ="card">
+    教師画面
+</a>
+
+<a href="pages/student/student.html" class="card">
+    学生画面
+</a>
+
+<a href="pages/admin/admin.html" class="card">
+    管理者画面
+</a>
+
+</div>
+
+</div>
+
+<button onclick="openFolder()" class="ex">エクスプローラー</button>
+
+<script>
+function openFolder(){
+    let ip = location.hostname;
+    window.location.href = "file:////" + ip + "/attendance";
+}
+</script>
+
+</body>
+</html>

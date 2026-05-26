@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- スマホなどでも正しく表示するための設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- ブラウザのタブに表示されるタイトル -->
+  <title>教科編集</title>
+
+  <!-- 参照CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <!-- 認証JS -->
+  <script src="../../assets/js/common/auth.js" defer></script>
+  <script src="../../assets/js/common/login.js" defer></script> 
+
+  <!-- ページ固有JS -->
+  <script src="../../assets/js/pages/admin-subject-management.js" defer></script>
+  
+
+</head>
+
+<body class="role-admin page-admin-subject-management">
+
+  <!-- =============================
+       ヘッダー
+       全ページ共通の上部バー
+  ============================== -->
+  <header class="app-header">
+
+    <!-- 戻るボタン -->
+    <a href="admin_dashboard.html" class="back-btn">
+
+      <!-- SVGで矢印アイコンを描画 -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M14.5 5.5L8 12l6.5 6.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+
+    </a>
+
+    <!-- システムタイトル -->
+    <h1 class="app-title">出欠管理システム</h1>
+
+    <!-- ログインユーザー情報 -->
+    <div class="header-right">
+
+      <!-- ログインしているユーザー名 -->
+      <div id="login-name" class="login-name">ログイン名</div>
+
+      <!-- ログアウトボタン -->
+      <button id="logout-btn" class="logout-btn" type="button">ログアウト</button>
+
+    </div>
+  </header>
+
+
+
+  <!-- =============================
+       メインコンテンツ
+  ============================== -->
+  <main class="page attendance-page">
+
+
+    <!-- ページタイトル -->
+    <div class="page-top">
+      <h2 class="page-title">教科編集</h2>
+    </div>
+
+        <!-- 追加ボタン -->
+        <div class="user-edit-actions">
+          <a href="admin_subject-add.html">
+            <button class="add-user-btn" id="addSubjectBtn" type="button">追加</button>
+          </a>
+        </div>
+
+      </form>
+
+    </section>
+
+    <!-- =============================
+         教科テーブル
+    ============================== -->
+  <section class="subject-list-section">
+
+    <div class="subject-table-layout">
+
+      <div class="subject-table-wrap" id="subjectTableWrap">
+
+        <table class="subject-table">
+
+          <thead>
+            <tr>
+              <th class="col-subject">科目</th>
+              <th class="col-action">操作</th>
+            </tr>
+          </thead>
+
+          <tbody id="subjectTableBody">
+            <!-- JSで生成 -->
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>

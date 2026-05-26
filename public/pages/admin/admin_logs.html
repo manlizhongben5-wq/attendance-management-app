@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>ログ(編集・保存履歴)</title>
+
+  <!-- 参照CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <!-- 認証JS -->
+  <script src="../../assets/js/common/auth.js" defer></script>
+  <script src="../../assets/js/common/login.js" defer></script> 
+
+  <!-- ページ固有JS -->
+  <script src="../../assets/js/pages/admin-logs.js" defer></script>
+
+</head>
+
+<body class="role-admin page-admin_logs">
+  <!-- =============================
+       ヘッダー
+       admin_user-management.html に合わせた共通構成
+  ============================== -->
+  <header class="app-header">
+    <!-- 戻るボタン -->
+    <a href="admin_dashboard.html" class="back-btn">
+
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M14.5 5.5L8 12l6.5 6.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      
+    </a>
+
+    <!-- システムタイトル -->
+    <h1 class="app-title">出欠管理システム</h1>
+
+    <!-- 右側エリア -->
+    <div class="header-right">
+      <div id="login-name" class="login-name">ログイン名</div>
+      <button id="logout-btn" class="logout-btn" type="button">ログアウト</button>
+    </div>
+  </header>
+
+  <!-- =============================
+       メイン
+  ============================== -->
+  <main class="page logs-page">
+    <!-- ページタイトル -->
+    <div class="page-top">
+      <h2 class="page-title">ログ</h2>
+    </div>
+
+    <!-- 種別切り替え -->
+    <section class="content logs-content" aria-label="ログ条件">
+      <div class="row logs-filter-row">
+        <div class="logs-filter-left">    
+      <div class="label-inline">種別:</div>
+
+      <div class="radio-group" role="radiogroup" aria-label="ログ種別">
+        <label class="radio-item">
+          <input type="radio" name="logType" value="save" checked />
+          <span>出欠入力履歴</span>
+        </label>
+
+        <label class="radio-item">
+          <input type="radio" name="logType" value="admin" />
+          <span>管理者編集履歴</span>
+        </label>
+      </div>
+        </div>
+    
+        <div class="logs-actions is-hidden" id="adminActions" aria-label="管理者操作" aria-hidden="true">    
+      <button type="button" id="exportBtn" class="gray-btn logs-action-btn">エクスポート</button>
+      <button type="button" id="resetBtn" class="gray-btn logs-action-btn">ログリセット</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================
+         出欠入力履歴
+    ============================== -->
+    <section id="savePanel" class="logs-panel" aria-label="出欠入力履歴">
+      <h3 class="logs-section-title">保存履歴</h3>
+
+      <div class="logs-table-wrap" role="region" aria-label="保存履歴一覧" tabindex="0">
+        <table class="logs-table">
+          <thead>
+            <tr>
+              <th class="col-date">日</th>
+              <th class="col-time">時間</th>
+              <th class="col-teacher">教員名</th>
+              <th class="col-lecture">講義</th>
+              <th class="col-period">時限</th>
+              <th class="col-count">件数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026-02-26</td>
+              <td>15:05</td>
+              <td>田中まさし</td>
+              <td>コンピュータ概論</td>
+              <td>4</td>
+              <td>未:1, 出:60, 遅:1, 早:1, 公:1, 別:0</td>
+            </tr>
+            <tr>
+              <td>2026-02-27</td>
+              <td>09:25</td>
+              <td>佐藤花子</td>
+              <td>英語</td>
+              <td>1</td>
+              <td>未:0, 出:58, 遅:3, 早:0, 公:2, 別:1</td>
+            </tr>
+            <tr>
+              <td>2026-02-28</td>
+              <td>13:10</td>
+              <td>山田太郎</td>
+              <td>Web基礎</td>
+              <td>3</td>
+              <td>未:2, 出:55, 遅:1, 早:0, 公:0, 別:0</td>
+            </tr>
+            <tr>
+              <td>2026-03-01</td>
+              <td>10:00</td>
+              <td>鈴木一郎</td>
+              <td>アルゴリズム</td>
+              <td>2</td>
+              <td>未:0, 出:59, 遅:0, 早:0, 公:1, 別:0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =============================
+         管理者編集履歴
+    ============================== -->
+    <section id="adminPanel" class="logs-panel is-hidden" aria-label="管理者編集履歴" aria-hidden="true">
+      <div class="admin-log-head">
+        <h3 class="logs-section-title">編集履歴</h3>
+        <div class="admin-log-desc">日付,時間,学生・教員番号,氏名,コース,パスワード,ユーザー状態</div>
+      </div>
+
+      <div class="admin-log-box" role="region" aria-label="編集履歴内容" tabindex="0">
+        <ul class="admin-log-lines">
+          <li>2026-02-26,15:05,1234,小峠昇,情報システム,追加あり,追加</li>
+          <li>2026-02-27,17:05,1234,佐藤花子,情報システム,変更あり,変更</li>
+          <li>2026-02-28,09:12,2001,山本優,医療事務,ユーザー状態変更,無効</li>
+          <li>2026-03-01,11:30,9001,田中まさし,教員,パスワード変更,変更</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

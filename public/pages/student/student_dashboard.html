@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- スマホなどでも正しく表示するための設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- ブラウザのタブに表示されるタイトル -->
+  <title>機能選択ダッシュボード</title>
+
+  <!-- 参照CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <!-- 認証JS -->
+  <script src="../../assets/js/common/auth.js" defer></script>
+  <script src="../../assets/js/common/login.js" defer></script> 
+
+</head>
+
+<body class="role-student page-dashboard">
+
+  <!-- =============================
+       ヘッダー
+       全ページ共通の上部バー
+  ============================== -->
+  <header class="app-header">
+
+    <!-- 左の戻る矢印 -->
+    <button class="back-btn" type="button" aria-label="戻る">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M14.5 5.5L8 12l6.5 6.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <h1 class="app-title">出欠管理システム</h1>
+
+    <!-- 右側エリア -->
+    <div class="header-right">
+      <div id="login-name" class="login-name">ログイン名</div>
+      <button id="logout-btn" class="logout-btn" type="button">ログアウト</button>
+    </div>
+  </header>
+
+<!-- メイン -->
+<main class="page">
+    <div class="page-top">
+      <h2 class="page-title">機能選択ダッシュボード</h2>
+    </div>
+
+    <div class="menu-area">
+
+      <a href="student_check-subject.html" class="menu-btn">
+        教科別確認
+      </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

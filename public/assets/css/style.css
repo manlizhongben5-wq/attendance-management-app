@@ -1,0 +1,2233 @@
+﻿/* =========================
+        ヘッダー色
+========================= */
+/* #region Header */
+
+/* 教員：緑 */
+.role-teacher{
+  --role-color: #6ea845;
+}
+
+/* 生徒：青 */
+.role-student{
+  --role-color: #0b4f86;
+}
+
+/* 管理者：オレンジ */
+.role-admin{
+  --role-color: #e77f2f;
+}
+
+/* ===== 種別でヘッダー色を切り替える ===== */
+/* 教員：緑 */
+.role-teacher .app-header{ background: #6ea845; }
+/* 学生：青 */
+.role-student .app-header{ background: #0b4f86; }
+/* 管理者：オレンジ */
+.role-admin .app-header{ background: #e77f2f; }
+
+/* #endregion */
+
+/* =========================
+      全画面共通部品
+========================= */
+
+/* #region Common */
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  color: #111;
+  background: #fff;
+}
+
+/* ===== 共通ヘッダー（形だけ定義し、色は role.css で切り替える） ===== */
+.app-header{
+  height: 86px;
+  display: grid;
+  grid-template-columns: 56px 1fr auto; /*ヘッダーない要素の幅[ 左:戻る, 中:タイトル, 右:ログイン名,ログアウト ]*/
+  align-items: center;
+  gap: 20px;
+  padding: 0 16px;
+  color: #fff;
+  position: relative; /* absolute配置の基準 */
+  overflow: hidden;   /* はみ出し防止 */
+}
+
+.header-left {  /* ヘッダー左側 */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.back-btn{  /* 戻るボタン */
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+}
+.back-btn svg{ 
+  width: 44px; 
+  height: 44px;
+}
+/*ダッシュボードでは戻るボタンを見せない（レイアウトは崩さない） */
+.page-dashboard .back-btn{
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.header-page-title{
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  line-height: 1;
+
+  position: absolute;
+  z-index: 2;
+
+  /* 戻るボタンの中心:
+     左padding 16px + ボタン幅44pxの半分 = 38px
+     システムタイトルの中心:
+     ヘッダー全体の40%
+     → その中間位置にする */
+  left: calc((38px + 40%) / 2);
+
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* システムタイトル */
+.app-title{
+  margin: 0;
+  text-align: center;
+  color: #fff;
+
+  font-size: 40px;
+  font-weight: 600;
+
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header-right{  /* ヘッダー右側(ユーザー情報) */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-self: end;
+  position: relative;
+  z-index: 3;
+}
+
+.login-name{  /* ログイン名 */
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;   /* 折り返し防止 */
+}
+
+.logout-btn{  /* ログアウトボタン */
+  width: 150px;
+  height: 46px;
+  border: 1px solid #9f9f9f;
+  background: #c9c9c9;
+  color: #333;
+  font-size: 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0; /* フレックスアイテムが親要素の幅を超えた場合に、どの程度縮小するか */
+}
+
+
+
+/* ===== 共通ボタン ===== */
+.submit-btn{  /* 登録ボタン */
+  width: 120px;
+  height: 46px;
+  border: 1px solid #1a3f7a;
+  background: #3b6eb6;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.add-user-btn {  /* 追加ボタン */
+  width: 184px;
+  height: 46px;
+  border: 1px solid #5e9131;
+  background: #70a844;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.delete-btn{  /* 削除ボタン */
+  width: 120px;
+  height: 46px;
+  border: 2px solid #c96d24;
+  background: #e67e2f;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menu-btn{  /* ダッシュボードのメニューボタン */
+display:flex;              /* 中央配置を安定させる */
+    justify-content:center;    /* 横中央 */
+    align-items:center;        /* 縦中央 */
+    text-align:center;
+    text-decoration:none;      /* 下線を消す */
+    box-sizing:border-box;     /* width/height内にpaddingとborderを含める */
+
+    width:320px;
+    max-width:100%;
+    height:60px;
+    padding:13px;
+
+    background:#4d7ac8;
+    color:#fff;
+
+    border:2px solid #1a3f7a;
+    font-size:20px;
+    font-weight:600;
+    cursor:pointer;
+
+    margin-bottom:35px;
+}
+
+
+/* ===== 共通mainページレイアウト ===== */
+.page{  /* main全体の余白設定 */
+  padding: 42px 52px 60px;
+  box-sizing: border-box;
+}
+.page-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+.page-title{
+  margin: 0;
+  font-size: 36px;
+  font-weight: 500;
+}
+
+/* ===== テキストフィールド関連 ===== */
+.content {  /* 入力欄全体を囲う領域(の内側の余白) */
+  padding-top: 8px;
+}
+.field {  /* テキストフィールド(の外側の余白) */
+  margin: 26px 0;
+}
+.field-label {  /* テキスト入力欄の文字 */
+  display: block;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.text-input{  /* テキスト入力欄の枠 */
+  width: 260px;
+  height: 42px;
+  border: 2px solid #000;
+  font-size: 18px;
+  padding: 6px 10px;
+  outline: none;
+}
+.select-input{  /* コース選択プルダウンの枠 */
+  width: 260px;
+  height: 42px;
+  border: 2px solid #000;
+  font-size: 18px;
+  padding: 6px 40px 6px 10px;
+  background: #fff;
+  appearance: none;
+  outline: none;
+}
+.req{ /* 必須入力マーク「*」 */
+  color: #d60000;
+  margin-left: 6px;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none ;
+}
+
+/* ===== レスポンシブデザイン ===== */
+/* #region Responsive_design */
+
+@media (max-width: 1000px) {
+  .app-header {
+    height: 80px;
+    grid-template-columns: 48px 1fr auto;
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .back-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .back-btn svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header-page-title {
+    font-size: 24px;
+
+    /* 左padding 14px + ボタン幅38pxの半分 = 33px */
+    left: calc((33px + 40%) / 2);
+  }
+
+  .app-title {
+    font-size: 30px;
+    letter-spacing: 0.04em;
+  }
+
+  .header-right {
+    gap: 10px;
+  }
+
+  .login-name {
+    font-size: 18px;
+  }
+
+  .logout-btn {
+    width: 128px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-header {
+    height: 74px;
+    grid-template-columns: 40px 1fr auto;
+    gap: 8px;
+    padding: 0 10px;
+  }
+
+  .back-btn {
+    width: 32px;
+    height: 32px;
+  }
+  .back-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .header-page-title {
+    font-size: 19px;
+
+    /* 左padding 10px + ボタン幅32pxの半分 = 26px */
+    left: calc((26px + 40%) / 2);
+  }
+
+  .app-title {
+    font-size: 22px;
+    letter-spacing: 0.03em;
+  }
+
+  .header-right {
+    gap: 6px;
+  }
+
+  .login-name {
+    font-size: 13px;
+  }
+
+  .logout-btn {
+    width: 96px;
+    height: 34px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
+
+  /* メイン */
+  .page {
+    padding: 16px 24px 18px;
+  }
+  .page-title {
+    font-size: 28px;
+  }
+
+  /* 一行のテキスト入力欄、選択タブ */
+  .text-input,
+  .select-input,
+  .select-wrap {
+    width: 100%;
+  }
+
+  /* 登録ボタン */
+  .actions {
+    padding-left: 0;
+  }
+
+  /* 追加した共通部品のスマホ対応 */
+  .inline-label {
+    font-size: 18px;
+  }
+
+  .radio-inline {
+    font-size: 17px;
+  }
+
+  .gray-btn {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-header {
+    height: 68px;
+    grid-template-columns: 32px 1fr auto;
+    gap: 6px;
+    padding: 0 8px;
+  }
+
+  .back-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .back-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .header-page-title {
+    font-size: 16px;
+
+    /* 左padding 8px + ボタン幅28pxの半分 = 22px */
+    left: calc((22px + 40%) / 2);
+  }
+
+  .app-title {
+    font-size: 18px;
+    letter-spacing: 0.02em;
+  }
+
+  .login-name {
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    width: 78px;
+    height: 28px;
+    font-size: 10px;
+    padding: 0 6px;
+  }
+
+  .inline-label {
+    font-size: 17px;
+  }
+
+  .radio-inline {
+    font-size: 16px;
+  }
+
+  .gray-btn {
+    font-size: 15px;
+  }
+}
+
+/* #endregion */
+
+
+.row {/* ユーザー種別の行 */
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 0 28px;
+}
+
+.label-inline {  
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  height: 42px;
+  margin: 0;
+  line-height: 1;
+}
+
+.radio-group {/* ユーザー種別の行のラジオボタン */
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.radio-item {
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  line-height: 1;
+}
+
+.radio-item input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+/* ===== 追加ボタンの位置 ===== */
+.user-edit-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:30px;
+}
+
+
+/* =========================================
+   テーブル
+========================================= */
+/* #region table */
+
+.user-table-layout {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.user-table-wrap {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 242px;
+  background: #d8deec;
+}
+
+.user-table {
+  width: 100%;
+  min-width: 1020px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  text-align: center;     /* 横方向の中央 */
+  vertical-align: middle; /* 縦方向の中央 */
+}
+
+.user-table th,
+.user-table td {
+  border-right: 1px solid #e9edf7;
+  border-bottom: 1px solid #e9edf7;
+  padding: 9px 10px;
+  color: #111;
+  vertical-align: middle;
+  font-size: 26px;
+  font-weight: 400;
+  background: #d2d7e5;
+}
+
+.user-table thead th {
+  position:sticky;
+  top:0;  /* 固定開始位置 */
+  background: #4d76c5;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 6px 8px;
+}
+
+.user-table tbody tr:nth-child(odd) td {
+  background: #c8cedd;
+}
+
+.user-table tbody tr:nth-child(even) td {
+  background: #d3d7e2;
+}
+
+.user-table .col-name {
+  width: 33.33%;
+}
+
+.user-table .col-type {
+  width: 33.33%;
+}
+
+.user-table .col-action {
+  width: 33.34%;
+}
+
+/* 操作列 */
+.action-cell {
+  text-align: center !important;
+}
+
+.action-btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.change-user-btn,
+.change-password-btn {
+  min-width: 220px;
+  height: 38px;
+  border: 1px solid #4b79b2;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.change-user-btn {
+  background: #68a7de;
+}
+
+.change-password-btn {
+  background: #4d79cd;
+}
+
+/* #endregion */
+
+
+
+/* #endregion */
+
+/* =========================
+    ログイン画面共通部品
+========================= */
+/* #region Login */
+.page-teacher-login {
+  min-height: 100vh;
+}
+
+/* ヘッダー */
+.page-header {
+  padding: 24px 20px 0;
+}
+
+/* メイン */
+.page-main {
+  width: min(900px, 92%);
+  margin: 0 auto;
+  padding: 48px 0 64px;
+}
+
+.login-guide {
+  margin: 0 0 56px;
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+/* フォーム */
+.login-form {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto; /* フォーム全体を中央配置 */
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.form-label {
+  width: 150px;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.form-input {
+  width: 260px;
+  height: 42px;
+  padding: 6px 10px;
+  font-size: 18px;
+  background-color: #ffffff;
+  border: 2px solid #000;
+  border-radius: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+  .eye-btn {
+  width: 55px;
+  height: 42px;
+  padding: 6px 10px;
+  font-size: 18px;
+  background-color: #ffffff;
+  border: 2px solid #000;
+  border-radius: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.eye-btn svg{
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/* Edge・Internet Explorer・Chrome の標準パスワード表示ボタンを非表示にする */
+::-ms-reveal { /* IE・旧Edge */
+  display: none;
+}
+
+::-webkit-credentials-auto-fill-button, /* Chrome・新Edge（Chromium） */
+::-webkit-textfield-decoration-container {
+  display: none !important;
+}
+
+.btn-area {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.login-btn {
+  min-width: 320px;
+  height: 65px;
+  padding: 0 24px;
+  font-size: 24px;
+  letter-spacing: 3px;  /* テキストの文字と文字の間の間隔 */
+  color: #ffffff;
+  cursor: pointer;
+  background-color: var(--role-color, #72ad44);
+  border: none;
+}
+
+.login-btn:hover {
+  filter: brightness(0.9);
+}
+
+/* #endregion */
+
+
+/* =========================
+  ダッシュボード画面共通部品
+========================= */
+/* #region Dashboard */
+/* #endregion */
+
+/* =========================
+    　教員専用部品
+========================= */
+/* #region Teacher */
+
+/* ページ種別（参照 / 編集 / 変更）
+   戻るボタンの中心 と システムタイトルの中心 の中間に表示する */
+
+/* #region teacher_check-attendance 専用 */
+
+.attendance-summary-table {
+  min-width: 1400px;
+}
+
+/* 共通の sticky 指定を、このテーブルでは段ごとに上書きする */
+.attendance-summary-table thead th {
+  position: sticky;
+  z-index: 3;
+}
+
+/* -------------------------
+   1段目ヘッダー
+------------------------- */
+.attendance-summary-table .period-row th {
+  top: 0;
+  background: #5a7fc9;
+  color: #fff;
+  text-align: center;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 14px 12px;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+/* 左上の「生徒名」セルは2段分をまたぐので最前面に */
+.attendance-summary-table .period-row .col-student {
+  vertical-align: middle;
+  top: 0;
+  z-index: 5;
+}
+
+/* -------------------------
+   2段目ヘッダー
+   1段目の高さ分だけ下げる
+------------------------- */
+.attendance-summary-table .sub-row th {
+  top: 58px; /* 1段目ヘッダーの実高さに合わせる */
+  z-index: 4;
+
+  background: #d8e0f0;
+  color: #1c2430;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 2.0;
+  padding: 12px 8px;
+
+  /* sticky時でも縦線が見えるように内側にも線を描く */
+  box-shadow: inset -0px 0 0 #8fa3cc;
+}
+
+/* 2段目ヘッダーの一番右のセル */
+.attendance-summary-table .sub-row th:last-child {
+  border-right: none;
+  box-shadow: none;
+}
+
+/* 列幅 */
+/* 列幅は colgroup に指定する */
+.attendance-summary-table col.col-student {
+  width: 260px;
+}
+
+.attendance-summary-table col.col-status {
+  width: 70px;
+}
+
+.attendance-summary-table col.col-subject {
+  width: 190px;
+}
+
+
+
+/* #endregion */
+   
+/* #region teacher_record-attendance 専用 */
+
+/* テーブル全体の列幅バランス */
+.student-table {
+  width: 100%;
+  min-width: 1200px;
+  table-layout: fixed;
+}
+
+/* 学籍番号列 */
+.student-table .col-number{
+  width: 16%;
+}
+
+/* 氏名列 */
+.student-table .col-name{
+  width: 16%;
+}
+
+/* 出欠列 */
+.student-table .col-attendance{
+  width: 68%;
+}
+
+/* 出欠セルの余白を少し整える */
+.student-table tbody td:nth-child(3) {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* 出欠ラジオ群を横並びで整える */
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* ラベル内のラジオと文字の間隔を少し整える */
+.status-group .radio-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* #endregion */
+
+/* #region teacher_check-subject.html 専用 */
+
+/* テーブル左上のタイトル */
+.student-list-title {
+  margin: 18px 0 16px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* テーブル全体 */
+.student-table-layout {
+  width: 100%;
+}
+
+/* スクロール領域(外枠そのものをスクロール領域にする) */
+.student-table-wrap {
+  width: 100%;
+
+  /* 「スクロールさせる範囲の高さ」 */
+  max-height: 430px;
+
+  /* はみ出したときだけスクロールバーを表示 */
+  overflow: auto;
+
+  /* tableのセル内にある文字の折り返しを禁止 */
+  white-space: nowrap;
+
+  /* テーブル外枠 */
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+/* テーブル本体 */
+.student-table {
+  width: 100%;
+  min-width: 1200px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #ffffff;
+  text-align: center;
+}
+
+/* テーブルヘッダー */
+.student-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+
+  background: #5a7fc9;
+  color: #ffffff;
+  text-align: center;
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 14px 12px;
+
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.student-table thead th:last-child {
+  border-right: none;
+}
+
+/* 本文セル */
+.student-table tbody td {
+  padding: 14px 14px;
+  font-size: 21px;
+  color: #1c2430;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  vertical-align: middle;
+  background: #f8faff;
+  word-break: break-word;
+}
+
+.student-table tbody td:last-child {
+  border-right: none;
+}
+
+/* 交互の行色 */
+.student-table tbody tr:nth-child(odd) td {
+  background: #f8faff;
+}
+
+.student-table tbody tr:nth-child(even) td {
+  background: #eef3fb;
+}
+
+/* ホバー時に少し見やすく */
+.student-table tbody tr:hover td {
+  background: #e4ecf9;
+}
+
+
+/* 学生テーブル列幅 */
+.student-table .col-no { width: 170px; }
+.student-table .col-name { width: 190px; }
+.student-table .col-attend-now { width: 170px; }
+.student-table .col-total-now { width: 180px; }
+.student-table .col-total { width: 150px; }
+.student-table .col-required { width: 180px; }
+.student-table .col-rate { width: 140px; }
+
+/* 空セルでも高さ維持 */
+.student-table tbody tr td:empty::after {
+  content: "";
+  display: inline-block;
+  min-height: 1em;
+}
+
+.attendance-note {
+  text-align: right;
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* レスポンシブ */
+@media (max-width: 900px) {
+  .subject-filter-row {
+    gap: 20px;
+  }
+
+  .subject-filter-item .filter-label {
+    font-size: 20px;
+  }
+
+  .subject-select {
+    font-size: 18px;
+    height: 40px;
+  }
+
+  .student-list-title {
+    font-size: 26px;
+  }
+
+  .student-table thead th {
+    font-size: 18px;
+    padding: 12px 8px;
+  }
+
+  .student-table tbody td {
+    font-size: 18px;
+    padding: 12px 10px;
+  }
+}
+/* #endregion */
+
+/* #endregion */
+
+/* =========================
+   　 学生専用部品
+========================= */
+/* #region Student */
+/* #endregion */
+
+/* =========================
+    　管理者専用部品
+========================= */
+/* #region Admin */
+
+.page-admin-user-edit {
+  background: #efefef;
+}
+
+/* ヘッダーまわり
+   画像に近づけるため、このページだけ少し調整 */
+.page-admin-user-edit .app-header {
+  margin: 22px 38px 0;
+  width: auto;
+  height: 88px;
+}
+
+.page-admin-user-edit .app-title {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.page-admin-user-edit .back-btn svg {
+  width: 46px;
+  height: 46px;
+}
+
+.page-admin-user-edit .header-right {
+  gap: 18px;
+}
+
+.page-admin-user-edit .admin-login-name {
+  font-size: 24px;
+  color: #111;
+  position: absolute;
+  right: 0;
+  top: 116px;
+  white-space: nowrap;
+}
+
+.page-admin-user-edit .logout-btn {
+  width: 244px;
+  height: 52px;
+  font-size: 28px;
+  color: #f3f3f3;
+  background: #c8c8c8;
+  border: 1px solid #a5a5a5;
+}
+
+/* #endregion */
+
+
+/* =========================
+    　以下未整理部品
+========================= */
+
+/* ===== 3ページのみタイトル色変更 ===== */
+.page-teacher .app-title{ background: var(--role-color); }
+.page-student .app-title{ background: var(--role-color); }
+.page-admin .app-title{ background: var(--role-color); }
+
+/* =========================
+    以下リージョン内消していいかも
+========================= */
+
+/* #region delete */
+
+/* =========================================
+   上部操作エリア
+========================================= */
+.user-edit-control-area {
+  margin-bottom: 38px;
+}
+
+.user-type-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.user-type-label {
+  font-size: 26px;
+  color: #111;
+  line-height: 1;
+}
+
+.user-type-radio {
+  font-size: 24px;
+  gap: 3px;
+  color: #111;
+}
+
+.user-type-radio input {
+  width: 20px;
+  height: 20px;
+}
+
+/* 見本画像の色味を反映 */
+.teacher-radio {
+  color: #111;
+}
+
+.student-radio {
+  color: #0b6fe8;
+}
+
+/* 片方選択時、非選択の教員をやや赤系に見せる */
+.page-admin-user-edit[data-user-type="student"] .teacher-radio {
+  color: #aa5d74;
+}
+
+.page-admin-user-edit[data-user-type="student"] .student-radio {
+  color: #111;
+}
+
+.page-admin-user-edit[data-user-type="teacher"] .teacher-radio {
+  color: #111;
+}
+
+.page-admin-user-edit[data-user-type="teacher"] .student-radio {
+  color: #0b6fe8;
+}
+
+/* =========================================
+   右側スクロールボタン
+========================================= */
+
+.subject-scroll-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #000;
+  border-left: none;
+  background: #fff;
+}
+
+.user-scroll-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #000;
+  border-left: none;
+  background: #fff;
+}
+
+.scroll-btn {
+  appearance: none;
+  border: none;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.scroll-up {
+  height: 54px;
+  border-bottom: 1px solid #000;
+}
+
+.scroll-spacer {
+  flex: 1;
+  background:
+    linear-gradient(to bottom,
+      #d0d0d0 0,
+      #d0d0d0 24%,
+      #ffffff 24%,
+      #ffffff 25%,
+      #d0d0d0 25%,
+      #d0d0d0 41%,
+      #ffffff 41%,
+      #ffffff 42%,
+      #d0d0d0 42%,
+      #d0d0d0 100%);
+}
+
+.scroll-down {
+  height: 54px;
+  border-top: 1px solid #000;
+}
+
+.scroll-btn:hover {
+  background: #f3f3f3;
+}
+
+/* フォーム全体 */
+.user-form {
+  width: 520px;
+  max-width: 100%;
+}
+
+/* #endregion */
+
+
+
+
+
+
+
+
+
+
+
+/* コース選択の見た目 */
+.select-wrap {
+  position: relative;
+  width: 260px;
+}
+
+/* プルダウン矢印 */
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-30%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 14px solid #000;
+  pointer-events: none;
+}
+
+/* student以外のときコース非表示 */
+.is-hidden {
+  display: none;
+}
+
+/* ===== page-admin_change-pass.css ===== */
+/* =========================
+   admin_user-add.html 専用
+   ========================= */
+
+/* ページタイトル下の利用者情報 */
+.info-block {
+  margin: 12px 0 26px;
+}
+
+.user-info {
+  margin: 0 0 18px;
+  font-size: 22px;
+}
+
+/* 入力欄はアイコン分だけ右余白を確保 */
+.password-input {
+  width: 100%;
+  padding-right: 48px;
+  background: #fff;
+}
+
+/* 登録ボタン位置 */
+.actions {
+  margin-top: 18px;
+  padding-left: 52px;
+}
+
+/* ===== page-admin_subject-management.css ===== */
+/* ========================================
+   テーブル
+======================================== */
+/* #region subject-table */
+
+.subject-table-layout{
+
+display:flex;
+
+width:100%;
+
+align-items:stretch;
+
+}
+
+
+.subject-table-wrap{
+
+flex:1;
+
+overflow-y:auto;
+
+max-height:600px;
+
+background:#d8deec;
+
+}
+
+
+.subject-table{
+
+width:100%;
+
+border-collapse:separate;
+
+border-spacing:0;
+
+table-layout:fixed;
+
+min-width:800px;
+
+}
+
+
+.subject-table th,
+.subject-table td{
+
+border-right:1px solid #000000;
+border-bottom:1px solid #000000;
+
+padding:10px;
+
+font-size:24px;
+
+background:#d2d7e5;
+
+}
+
+
+.subject-table thead th{
+position:sticky;
+top:0;  /* 固定開始位置 */
+background:#4d76c5;
+
+color:#fff;
+
+text-align:center;
+
+font-size:22px;
+
+}
+
+
+.subject-table tbody tr:nth-child(odd) td{
+background:#c8cedd;
+text-align:center;
+}
+
+.subject-table tbody tr:nth-child(even) td{
+background:#d3d7e2;
+text-align:center;
+}
+
+
+.col-subject{
+width:60%;
+}
+
+.col-action{
+width:40%;
+text-align:center;
+}
+
+/* #endregion */
+
+
+
+
+/* ========================================
+   操作ボタン
+======================================== */
+
+.change-subject-btn{
+width:200px;
+height:36px;
+background:#5fa2d9;
+color:#fff;
+border:1px solid #4b79b2;
+font-size:18px;
+cursor:pointer;
+}
+
+/* 操作列を完全中央 */
+.subject-table td:nth-child(2){
+text-align:center;
+vertical-align:middle;
+}
+
+/* ボタン中央 */
+.change-subject-btn{
+display:block;
+margin:0 auto;
+}
+
+/* =========================================================
+   ここから下は、他ページでも使い回しやすい共通部品
+========================================================= */
+
+/* ラベル + 入力欄を横並びにする共通クラス */
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* 横並び入力のラベル */
+.inline-label {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* 小さめセレクトボックス用のラッパー */
+.compact-select-wrap {
+  position: relative;
+  width: 128px;
+  flex: 0 0 auto;
+}
+
+/* セレクト右側の▼マークをCSSで描画 */
+.compact-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 14px solid #000;
+  pointer-events: none;
+}
+
+/* 小さめセレクト本体 */
+.compact-select {
+  width: 100%;
+  padding-right: 42px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* ラジオボタンを横並びにする共通クラス */
+.radio-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+.radio-inline input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+/* 灰色の共通操作ボタン */
+.gray-btn {
+  min-width: 118px;
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid #9f9f9f;
+  background: #c9c9c9;
+  color: #333;
+  font-size: 18px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ユーザー設定変更・編集ボタン */
+.edit-btn {
+  width:auto; /* 文字に合わせた幅 */
+  min-width: 120px; /* ボタンの最小幅 */
+  padding: 0 16px;
+  height:46px;
+  white-space: nowrap; /* 折り返さない */
+  background:#5fa2d9;
+  color:#fff;
+  border:2px solid #4b79b2;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* パスワード変更ボタン */
+.password-btn {
+  width:auto;
+  min-width: 120px;
+  padding: 0 16px;
+  height: 46px;
+  white-space: nowrap;
+  border: 2px solid #355da8;
+  background: #4d79cd;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* フォーム入力が必須 */
+.required {
+    color: red;
+}
+
+/* 入力フォームの「必須」 */
+.required-badge {
+    display: inline-block;
+
+    margin-left: 8px;
+    margin-bottom: 3px;
+    padding: 2px 8px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    color: white;
+    background-color: #e53935;
+
+    border-radius: 999px;
+
+    vertical-align: middle;
+}
+
+/* パスワード入力フォーム下の注意書き */
+.password-note {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #666;
+}
+
+
+/* ===== page-admin_subject-edit.css ===== */
+/* =========================================================
+   admin_user-setting-change 専用CSS
+   - 共通部分は base.css / role.css を利用
+   - このファイルでは、この画面だけの余白・配置・文字サイズを調整
+========================================================= */
+
+/* ===== ユーザー情報 ===== */
+.page-admin_user-edit_teacher .user-info-section {
+  margin-bottom: 52px;
+}
+
+.page-admin_user-edit_teacher .user-info-text {
+  margin: 0 0 28px 0;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: #222;
+}
+
+/* hoverは軽め */
+.page-admin_user-edit_student .submit-btn:hover,
+.page-admin_user-edit_student .delete-btn:hover {
+  opacity: 0.92;
+}
+
+/* ===== ボタンエリア ===== */
+.page-admin_user-edit_teacher .content {
+  margin-top: 8px;
+}
+
+/* hoverは必要なら少しだけ変化 */
+.page-admin_user-edit_teacher .delete-btn:hover {
+  opacity: 0.92;
+}
+
+/* ===== page-admin_logs.css ===== */
+/* =========================================
+   admin_logs 専用CSS
+   admin_user-management 系の構成に合わせつつ、
+   既存のログ画面レイアウトを維持する
+========================================= */
+
+/* =========================================
+   メイン領域
+========================================= */
+.logs-page {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-top: 28px;
+  padding-bottom: 40px;
+}
+
+.logs-content {
+  padding-top: 0;
+}
+
+/* =========================================
+   種別切り替え + 右上操作
+========================================= */
+.logs-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: nowrap;
+}
+
+.logs-filter-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logs-filter-row .radio-group {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: nowrap;
+}
+
+.logs-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logs-action-btn {
+  width: 184px;
+  height: 42px;
+  font-size: 18px;
+}
+
+/* =========================================
+   パネル共通
+========================================= */
+.logs-panel {
+  margin-top: 12px;
+}
+
+.logs-section-title {
+  margin: 0 0 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* =========================================
+   保存履歴テーブル
+========================================= */
+
+/* #region logs-table */
+
+.logs-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid #c7cfdf;
+  background: #d9dfec;
+}
+
+.logs-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.logs-table thead th {
+  background: #4772bf;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logs-table thead th:last-child {
+  border-right: none;
+}
+
+.logs-table tbody td {
+  padding: 18px 14px;
+  font-size: 18px;
+  color: #111;
+  border-right: 1px solid #e8edf8;
+  border-top: 1px solid #c7cfdf;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+.logs-table tbody td:last-child {
+  border-right: none;
+}
+
+.logs-table tbody tr:nth-child(odd) td {
+  background: #c7cfe0;
+}
+
+.logs-table tbody tr:nth-child(even) td {
+  background: #d6dbe7;
+}
+
+/* ログ表示列幅 */
+.logs-table .col-date { width: 160px; }
+.logs-table .col-time { width: 140px; }
+.logs-table .col-teacher { width: 230px; }
+.logs-table .col-lecture { width: 260px; }
+.logs-table .col-period { width: 100px; text-align: center; }
+.logs-table .col-count { width: auto; }
+
+/* #endregion */
+
+
+/* =========================================
+   管理者編集履歴
+========================================= */
+.admin-log-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.admin-log-desc {
+  font-size: 20px;
+  color: #000000;
+}
+
+.admin-log-box {
+  width: 100%;
+  min-height: 300px;
+  border: 1px solid #444;
+  background: #fff;
+  padding: 14px 16px;
+  overflow: auto;
+}
+
+.admin-log-lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-log-lines li {
+  font-size: 18px;
+  line-height: 2;
+  color: #111;
+  white-space: nowrap;
+}
+
+/* =========================================
+   JS表示切替用
+========================================= */
+.is-hidden {
+  display: none !important;
+}
+
+/* ===== メニューエリア ===== */
+.menu-area{
+    margin-top:40px;
+}
+
+/* ===== 編集行 ===== */
+.edit-row{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:35px;
+}
+
+.edit-row .menu-btn{
+    margin-bottom:0;
+
+    /* 他のボタンと完全に同じ幅にする */
+    width:320px;
+    max-width:100%;
+    flex:0 0 auto;
+}
+
+.editing-text{
+    font-size:20px;
+    line-height:1.4;
+    white-space:normal;
+    word-break:keep-all;
+    flex:0 0 auto;
+}
+
+/* ===== page-teacher_check-attendance.css ===== */
+/* =========================================
+   teacher_check-attendance.html 専用
+========================================= */
+
+.attendance-page {
+  padding-top: 22px;
+  padding-bottom: 28px;
+}
+
+/* ===== タイトル下の条件エリア ===== */
+.filter-area {  /* 条件エリア */
+  margin-bottom: 22px;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.filter-item {  /* 日付＋カレンダー */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-label { /* 「日付:」 */
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.filter-item-date {
+  min-width: 280px;
+}
+
+.date-input-wrap {
+  position: relative;
+}
+
+.date-input {
+  width: 100%;
+  height: 42px;
+  border: 2px solid #000;
+  font-size: 18px;
+  padding: 6px 42px 6px 10px;
+  background: #fff;
+  outline: none;
+}
+
+.calendar-icon{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:22px;
+  height:22px;
+  pointer-events:none;
+}
+
+.date-input::-webkit-calendar-picker-indicator{
+  opacity:0;
+  position:absolute;
+  right:0;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+}
+
+.small-select-wrap {
+  position: relative;
+  width: 98px;
+}
+
+.small-select-wrap::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:0;
+  height:0;
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-top:12px solid #000;
+  pointer-events:none;
+}
+
+.small-select{
+  width:100%;
+  padding-right:32px;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+.course-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.course-group legend {
+  float: left;
+  width: auto;
+  padding: 0;
+  margin: 0 10px 0 0;
+  white-space: nowrap;
+}
+
+.filter-action {
+  margin-left: auto;
+  flex: 0 0 auto; /* flexレイアウト内でサイズを自動伸縮させず、ボタン幅を固定する */
+}
+
+.export-btn {
+  width: 170px;
+  height: 46px;
+  border: 1px solid #9f9f9f;
+  background: #c9c9c9;
+  color: #333;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+/* ===== page-teacher_record-attendance.css ===== */
+/* =========================================
+   teacher_record-attendance.html 専用
+========================================= */
+
+/* ヘッダー右側の「編集」 */
+.editing-label {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+/* ページ上部 */
+.attendance-page-top {
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+.attendance-page-title {
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.page-user-name {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* 条件エリア */
+.attendance-toolbar {
+  margin-bottom: 8px;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.toolbar-row-top {
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.toolbar-row-bottom {
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.toolbar-date {
+  font-size: 28px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.toolbar-center-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.toolbar-period {
+  flex: 0 0 auto;
+}
+
+.period-select-wrap {
+  width: 98px;
+}
+
+.subject-select-wrap {
+  width: 104px;
+}
+
+.course-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.course-group legend {
+  float: left;
+  width: auto;
+  padding: 0;
+  margin: 0 10px 0 0;
+  white-space: nowrap;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.toolbar-subject {
+  flex: 0 0 auto;
+}
+
+.summary-row {
+  font-size: 24px;
+  text-align: center;
+  margin: 8px 0 10px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   出欠状態ごとの行背景色
+========================================================= */
+
+.attendance-row.status-unselected td {
+  background-color: #ffffff !important;
+}
+
+.attendance-row.status-present td {
+  background-color: #dce8d2 !important;
+}
+
+.attendance-row.status-absent td {
+  background-color: #ecd8cc !important;
+}
+
+.attendance-row.status-late td {
+  background-color: #e9ddb8 !important;
+}
+
+.attendance-row.status-leave td {
+  background-color: #cfa3ea !important;
+}
+
+.attendance-row.status-official td {
+  background-color: #cfd8f1 !important;
+}
+
+.attendance-row.status-separate td {
+  background-color: #d8d8d8 !important;
+}
+
+/* =========================================
+   条件エリア
+========================================= */
+/* 条件エリア下の余白 */
+.subject-filter-area {
+  margin-bottom: 18px;
+}
+
+.subject-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  flex-wrap: wrap;
+}
+
+.subject-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subject-filter-item .filter-label {
+  font-size: 24px;
+}
+
+.subject-select-wrap,
+.subject-wide-select-wrap {
+  position: relative;
+}
+
+.subject-select-wrap {
+  width: 202px;
+}
+
+.subject-wide-select-wrap {
+  width: 258px;
+}
+
+.subject-select-wrap::after,
+.subject-wide-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 18px solid #000;
+  pointer-events: none;
+}
+
+.subject-select {
+  width: 100%;
+  height: 38px;
+  font-size: 23px;
+  padding: 4px 46px 4px 12px;
+  border: 1px solid #000;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* ===== login.css ===== */
+/* =========================================================
+   ログイン画面専用CSS
+   共通部分は base.css / role.css に任せ、
+   この画面固有のレイアウトだけを書く
+========================================================= */
+
+/* ===== ログインページのヘッダーだけ共通ヘッダーのabsolute指定を打ち消す ===== */
+.page-header .app-title {
+  position: static;
+  left: auto;
+  transform: none;
+  pointer-events: auto;
+  display: block;
+  width: 100%;
+}
+
+/* ===== page-student_check-subject.css ===== */
+/* =========================================
+   教科別確認（参照）専用
+========================================= */
+/* ページ全体 */
+.subject-summary-page {
+  padding: 18px 16px 24px;
+}
+
+/* =============================
+   テーブル
+============================== */
+.summary-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  
+  /* テーブル外枠 */
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.summary-table th,
+.summary-table td {
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+/* ヘッダー */
+.summary-table thead th {
+  background: #4d76c5;
+  color: #fff;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* データ行 */
+.summary-table tbody td {
+  background: #c8cfdf;
+  color: #111;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* 4列均等 */
+.summary-table .col-attend-now,
+.summary-table .col-total-now,
+.summary-table .col-total,
+.summary-table .col-rate {
+  width: 25%;
+}

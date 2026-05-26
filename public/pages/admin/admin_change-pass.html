@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>パスワード変更</title>
+
+  <!-- 参照CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <!-- 共通JS -->
+  <script src="../../assets/js/common/pass.js" defer></script>
+
+  <!-- 認証JS -->
+  <script src="../../assets/js/common/auth.js" defer></script>
+  <script src="../../assets/js/common/login.js" defer></script> 
+  
+  <!-- ページ固有JS -->
+  <script src="../../assets\js\pages\admin-change-pass_teacher.js" defer></script>
+  <script src="../../assets\js\pages\admin-change-pass_student.js" defer></script>
+
+</head>
+<body class="role-admin page-admin-user-add">
+
+  <!--ヘッダー -->
+  <header class="app-header">
+
+    <!-- 左の戻る矢印 -->
+    
+    <a href="admin_user-management.html">
+      <button class="back-btn" type="button" aria-label="戻る">
+      
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M14.5 5.5L8 12l6.5 6.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </a>
+    
+
+    <h1 class="app-title">出欠管理システム</h1>
+
+    <!-- 右側エリア -->
+    <div class="header-right">
+      <div id="login-name" class="login-name">ログイン名</div>
+      <button id="logout-btn" class="logout-btn" type="button">ログアウト</button>
+    </div>
+  </header>
+
+  <!-- メイン -->
+  <main class="page">
+    <div class="page-top">
+      <h2 class="page-title">パスワード変更</h2>
+    </div>
+
+ <section class="content">
+      <form class="password-change-form" action="#" method="post">
+        <!-- 利用者情報 -->
+        <div class="info-block">
+
+          <p class="user-info">
+            名前：<span id="user-name"></span>
+          </p>
+
+          <p class="user-info">
+            ユーザー種別：<span id="user-type"></span>
+          </p>
+          
+        </div>
+
+        <!-- 新しいパスワード -->
+        <div class="field">
+          <label for="new-password" class="field-label">
+            新しいパスワード
+            <span class="required-badge">必須</span>
+          </label>
+
+          <div class="password-field">
+            <input
+              id="new-password"
+              name="newPassword"
+              type="password"
+              class="form-input"
+              minlength="8"
+              maxlength="72"
+              required
+            />
+           <button
+              type="button"
+              class="eye-btn"
+              aria-label="パスワードを表示"
+              aria-pressed="false"
+            >
+              👁
+            </button>
+          </div>
+
+          <p class="password-note">
+            ※ パスワードは8〜72文字で入力してください
+          </p>
+
+        </div>
+
+        <!-- 新しいパスワード（確認） -->
+        <div class="field">
+          <label for="confirm-password" class="field-label">
+            新しいパスワード(確認)
+            <span class="required-badge">必須</span>
+          </label>
+
+          <div class="password-field">
+            <input
+              id="confirm-password"
+              name="confirmPassword"
+              type="password"
+              class="form-input"
+              minlength="8"
+              maxlength="72"
+              required
+            />
+           <button
+              type="button"
+              class="eye-btn"
+              aria-label="パスワードを表示"
+              aria-pressed="false"
+            >
+              👁
+            </button>
+          </div>
+
+          <p class="password-note">
+            ※ 確認のため、同じパスワードを入力してください
+          </p>
+
+        </div>
+
+        <!-- 登録ボタン -->
+        <div class="actions">
+          <button 
+            type="button"
+            class="submit-btn"
+            id="update-password-btn"
+          >
+            登録
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
