@@ -2,113 +2,43 @@
 
 ## 概要
 
-学校用の出欠管理システム
+教員の出欠管理業務を効率化するために制作した、学校向けの出欠管理システムです。
 
-## 使用技術
+---
 
-### サーバーソフト
+## 制作背景
 
-- XAMPP
+授業ごとの出欠確認や管理業務を効率化し、  
+教員・生徒双方が出席状況を確認しやすくすることを目的として制作しました。
 
-### フロントエンド
+---
 
-- HTML
-- CSS
-- JavaScript
+## 実装済み機能
 
-### バックエンド
+### 共通機能
+- ログイン / ログアウト
+- セッション管理
+- ロール別画面制御
 
-- PHP
-
-### データベース
-
-- MySQL(MariaDB)
-
-
-## 機能
-
-- ログイン
+### 教員機能
 - 出欠登録
-- 履歴管理
+- 出欠編集
+- 授業別出欠確認
+- 出席率確認
 
+### 生徒機能
+- 自身の出席状況確認
+- 教科別出席率確認
 
-## 要件定義
+### 管理者機能
+- ユーザー編集
+- パスワード変更
 
-- 授業開始時に先生が入力
-    - 担当講師選択
-    - 担当コマの選択
-    - 出欠の入力
+### その他
+- トランザクション処理
+- ロールバック処理
 
-- ユーザー管理(先生、生徒、管理者)
-    - 管理者
-        - 先生アカウントの追加、生徒アカウントの追加
-    - 先生
-        - 出欠の入力
-        - 各個人の出席率等表示
-            - 設計段階で要検討
-    - 生徒
-        - 自身の出席率表示
-
-- 帳票出力・できればコマ事計算(先生)
-
-
-## フォルダ構成
-```
-Attendance-management-system
-│
-├ docs
-│   ├ 詳細設計書-画面(出欠管理システム).xlsx
-│   └ 詳細設計書-DB(出欠管理システム).xlsx
-│
-├ public
-│   ├ index.html
-│   ├ pages
-│   │   ├ admin
-│   │   │   └ admin.html
-│   │   │      ...
-│   │   ├ student
-│   │   │   └ student.html
-│   │   │      ...
-│   │   └ teacher
-│   │       └ teacher.html
-│   │          ...
-│   │
-│   └ assets
-│       ├ css
-│       └ js
-│       
-│
-├ backend
-│   ├ config
-│   │   └ db.php
-│   │
-│   ├ lib
-│   │   ├ auth.php
-│   │   ├ db.php
-│   │   └ utils.php
-│   │
-│   └ api
-│
-├ db
-│   └ schema.sql
-│
-├ README.md
-└ .gitignore
-```
-※ セキュリティおよび個人情報保護のため、
-テストデータ投入用SQLは公開対象から除外しています。
-
-## セットアップ
-
-1. XAMPPを起動
-2. Apache / MySQL を開始
-3. db/schema.sql をインポート
-4. public/index.html にアクセス
-
-## DB設定
-
-backend/config/db.sample.php を参考に、
-db.php を作成してください。
+---
 
 ## 画面一覧
 
@@ -116,8 +46,8 @@ db.php を作成してください。
 
 - ログイン
 - 機能選択ダッシュボード
-- 全体出欠画面(参照)
-- 全体出欠画面(編集)
+- 全体出欠画面（参照）
+- 全体出欠画面（編集）
 - 教科別確認
 
 ### 生徒画面
@@ -131,19 +61,159 @@ db.php を作成してください。
 - ログイン
 - 機能選択ダッシュボード
 - ユーザー編集
-- ユーザー追加
 - ユーザー設定変更
 - パスワード変更
-- 教科編集
-- 教科追加
-- 教科設定変更
-- ログ(編集・保存履歴)
 
-## 制作背景
-教員の出欠管理を効率化するために制作。
+---
+
+## 画面イメージ
+
+### 教員ダッシュボード
+
+教員用の機能選択画面。
+
+![teacher-dashboard](public/assets/images/teacher-dashboard.png)
+
+---
+
+### 出欠入力画面
+
+授業ごとの出欠登録・編集機能。
+
+![attendance-record](public/assets/images/attendance-record.png)
+
+---
+
+### 管理者ユーザー編集画面
+
+管理者によるユーザー管理機能。
+
+![admin-user-edit](public/assets/images/admin-user-edit.png)
+
+---
+
+### 生徒出席確認画面
+
+教科別の出席コマ・出席率表示
+
+![student-attendance-summary](public/assets/images/student-attendance-summary.png)
+
+---
+
+## 使用技術
+
+### フロントエンド
+- HTML
+- CSS
+- JavaScript
+
+### バックエンド
+- PHP
+
+### データベース
+- MySQL（MariaDB）
+
+### 開発環境
+- XAMPP
+- VirtualBox
+- Ubuntu Server
+
+---
+
+## 工夫した点
+
+- 管理者 / 教員 / 生徒ごとに利用可能機能と画面を分離
+- PDOを利用した安全なDB接続
+- トランザクション処理によるデータ整合性維持
+- VirtualBox 上に Ubuntu Server 環境を構築し、Apache / PHP / MariaDB による動作確認を実施
+- .gitignore や db.sample.php を利用し、機密情報をGitHub公開対象から除外
+
+---
+
+## フォルダ構成
+
+```text
+Attendance-management-system
+│
+├ public
+│   ├ index.html
+│   ├ assets
+│   │   ├ css
+│   │   ├ js
+│   │   └ images
+│   │
+│   └ pages
+│       ├ admin
+│       ├ student
+│       └ teacher
+│
+├ backend
+│   ├ config
+│   │   └ db.sample.php
+│   │
+│   └ php
+│
+├ db
+│   ├ teachers.sql
+│   ├ students.sql
+│   ├ attendances.sql
+│   └ ...
+│
+├ README.md
+└ .gitignore
+```
+
+※ セキュリティおよび個人情報保護のため、
+テストデータ投入用SQLや機密情報を含む設定ファイルは公開対象から除外しています。
+
+---
+
+## セットアップ
+
+1. XAMPPを起動
+2. Apache / MySQL を開始
+3. db フォルダ内の SQL ファイルを phpMyAdmin からインポート
+4. ブラウザで `public/index.html` にアクセス
+
+---
+
+## DB設定
+
+`backend/config/db.sample.php` を参考に、
+`db.php` を作成してください。
+
+---
+
+## 要件定義
+
+- 授業開始時に教員が出欠を入力
+    - 担当教員選択
+    - 担当コマ選択
+    - 出欠入力
+
+- ユーザー管理（教員 / 生徒 / 管理者）
+    - 管理者
+        - 教員アカウントの追加
+        - 生徒アカウントの追加
+    - 教員
+        - 出欠入力
+        - 各生徒の出席率確認
+    - 生徒
+        - 自身の出席率確認
+
+- 帳票出力機能
+- 授業コマ単位での集計機能
+
+---
 
 ## 今後の課題
-- 管理者画面の実装
-- セキュリティの強化
-- UI改善
-- 権限制御
+- 教員アカウント追加機能
+- 生徒アカウント追加機能
+- 教科編集 / 追加 / 削除
+- 編集ログ保存機能
+- ログ閲覧機能
+- バリデーション強化
+- 権限制御の強化
+- セキュリティ強化
+- UI / UX改善（レスポンシブ対応含む）
+- 帳票出力機能の改善
