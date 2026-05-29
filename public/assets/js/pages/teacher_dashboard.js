@@ -6,7 +6,7 @@ let isNavigatingToEdit = false;
 window.addEventListener('pagehide', () => {
     // 編集画面へ行く時以外（タブ閉じなど）は解除する
     if (!isNavigatingToEdit) {
-        navigator.sendBeacon('/attendance/backend/php/manage_editor.php?action=unlock');
+        navigator.sendBeacon('/attendance-management-app/backend/php/manage_editor.php?action=unlock');
     }
 });
 /**
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!editBtn || !editingText) return;
 
         try {
-            const res = await fetch('/attendance/backend/php/manage_editor.php?action=status');
+            const res = await fetch('/attendance-management-app/backend/php/manage_editor.php?action=status');
             const data = await res.json();
 
             if (data.is_someone_editing && !data.is_me) {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         editBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             try {
-                const res = await fetch('/attendance/backend/php/manage_editor.php?action=lock');
+                const res = await fetch('/attendance-management-app/backend/php/manage_editor.php?action=lock');
                 const data = await res.json();
 
                 if (data.success) {

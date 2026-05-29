@@ -10,23 +10,23 @@ const Auth = {
 
   // ログイン不要ページ
   publicPages: [
-    "/attendance/public/pages/admin/admin.html",
-    "/attendance/public/pages/student/student.html",
-    "/attendance/public/pages/teacher/teacher.html"
+    "/attendance-management-app/public/pages/admin/admin.html",
+    "/attendance-management-app/public/pages/student/student.html",
+    "/attendance-management-app/public/pages/teacher/teacher.html"
   ],
 
   // ロールごとのログイン画面
   loginPageMap: {
-    admin: "/attendance/public/pages/admin/admin.html",
-    student: "/attendance/public/pages/student/student.html",
-    teacher: "/attendance/public/pages/teacher/teacher.html"
+    admin: "/attendance-management-app/public/pages/admin/admin.html",
+    student: "/attendance-management-app/public/pages/student/student.html",
+    teacher: "/attendance-management-app/public/pages/teacher/teacher.html"
   },
 
   // ロールごとのログイン後のメニュー画面
   menuPageMap: {
-    admin: "/attendance/public/pages/admin/admin_dashboard.html",
-    student: "/attendance/public/pages/student/student_dashboard.html",
-    teacher: "/attendance/public/pages/teacher/teacher_dashboard.html"
+    admin: "/attendance-management-app/public/pages/admin/admin_dashboard.html",
+    student: "/attendance-management-app/public/pages/student/student_dashboard.html",
+    teacher: "/attendance-management-app/public/pages/teacher/teacher_dashboard.html"
   },
 
   // =============================
@@ -41,7 +41,7 @@ const Auth = {
 
         window.location.href =
           this.loginPageMap[role] ||
-          "/attendance/public/pages/student/student.html";
+          "/attendance-management-app/public/pages/student/student.html";
         return;
       }
 
@@ -72,7 +72,7 @@ const Auth = {
   async checkSession() {
     try {
       const response = await fetch(
-        "/attendance/backend/php/check_session.php",
+        "/attendance-management-app/backend/php/check_session.php",
         {
           method: "GET",
           credentials: "same-origin"
@@ -135,9 +135,9 @@ const Auth = {
   getRoleFromPath() {
     const path = window.location.pathname;
 
-    if (path.startsWith("/attendance/public/pages/admin/")) return "admin";
-    if (path.startsWith("/attendance/public/pages/student/")) return "student";
-    if (path.startsWith("/attendance/public/pages/teacher/")) return "teacher";
+    if (path.startsWith("/attendance-management-app/public/pages/admin/")) return "admin";
+    if (path.startsWith("/attendance-management-app/public/pages/student/")) return "student";
+    if (path.startsWith("/attendance-management-app/public/pages/teacher/")) return "teacher";
 
     return null;
   },
@@ -151,7 +151,7 @@ const Auth = {
     if (!user) {
       window.location.href =
         this.loginPageMap[role] ||
-        "/attendance/public/pages/student/student.html";
+        "/attendance-management-app/public/pages/student/student.html";
       return;
     }
 
@@ -160,7 +160,7 @@ const Auth = {
 
       window.location.href =
         this.menuPageMap[user.role] ||
-        "/attendance/public/pages/student/student_dashboard.html";
+        "/attendance-management-app/public/pages/student/student_dashboard.html";
     }
   },
 
@@ -172,7 +172,7 @@ const Auth = {
     const role = user?.role;
 
     try {
-      await fetch("/attendance/backend/php/logout.php", {
+      await fetch("/attendance-management-app/backend/php/logout.php", {
         method: "GET",
         credentials: "same-origin"
       });
@@ -184,7 +184,7 @@ const Auth = {
 
     window.location.href =
       this.loginPageMap[role] ||
-      "/attendance/public/pages/student/student.html";
+      "/attendance-management-app/public/pages/student/student.html";
   },
 
   // =============================

@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ============================
   // 学生情報1件取得API
   // ============================
-  fetch(`/attendance/backend/php/get_student_detail.php?id=${studentId}`)
+  fetch(`/attendance-management-app/backend/php/get_student_detail.php?id=${studentId}`)
     .then(res => {
       if (!res.ok) {
         // サーバーエラー内容を確認
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!confirmDelete) return;
 
-    fetch("/attendance/backend/php/delete_student.php", {
+    fetch("/attendance-management-app/backend/php/delete_student.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

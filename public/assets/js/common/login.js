@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // login.php へのフェッチ処理
-      const response = await fetch("/attendance/backend/php/login.php", { // パスは適宜調整してください
+      const response = await fetch("/attendance-management-app/backend/php/login.php", { // パスは適宜調整してください
         method: "POST",
         body: formData
       });

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadSubjects() {
 
     // APIのURL（固定）
-    const url = "/attendance/backend/php/get_lessons.php";
+    const url = "/attendance-management-app/backend/php/get_lessons.php";
 
     // APIにリクエストを送る（非同期通信）
     fetch(url)

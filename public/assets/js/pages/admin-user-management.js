@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ラジオボタンの選択によって呼び出すAPIを切り替える
     const url = type === "teacher"
-      ? "/attendance/backend/php/get_teacher.php"  // 教員API
-      : "/attendance/backend/php/get_students_all.php"; // 学生API
+      ? "/attendance-management-app/backend/php/get_teacher.php"  // 教員API
+      : "/attendance-management-app/backend/php/get_students_all.php"; // 学生API
 
     // APIにリクエストを送る（非同期通信）
     fetch(url)

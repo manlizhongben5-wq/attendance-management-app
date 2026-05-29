@@ -5,7 +5,7 @@ declare(strict_types=1);
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/../config/db.php';
 
 try {
     $pdo = getDb();

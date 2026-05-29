@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.getElementById("attendanceTable");
   const courseOptions = document.getElementById("courseOptions");
 
-  const API_BASE = "/attendance/backend/php";
+  const API_BASE = "/attendance-management-app/backend/php";
 
   const API = {
     classes: `${API_BASE}/get_classes.php`,

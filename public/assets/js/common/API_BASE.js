@@ -1,4 +1,4 @@
-const API_BASE = '/attendance/backend/php';
+const API_BASE = '/attendance-management-app/backend/php';
 
 const API = {
   // マスタ系

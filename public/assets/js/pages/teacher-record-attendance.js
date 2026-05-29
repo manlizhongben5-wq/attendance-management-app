@@ -4,11 +4,11 @@
  * 編集画面から離れる時（タブ閉じ、他ページ遷移）にロックを解除する
  */
 window.addEventListener('pagehide', () => {
-  navigator.sendBeacon('/attendance/backend/php/manage_editor.php?action=unlock');
+  navigator.sendBeacon('/attendance-management-app/backend/php/manage_editor.php?action=unlock');
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const API_BASE = '/attendance/backend/php';
+  const API_BASE = '/attendance-management-app/backend/php';
 
   const API = {
     classes: `${API_BASE}/get_classes.php`,
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
    */
   const triggerUnlock = () => {
     console.log('アンロックリクエストを送信します...');
-    navigator.sendBeacon('/attendance/backend/php/manage_editor.php?action=unlock');
+    navigator.sendBeacon('/attendance-management-app/backend/php/manage_editor.php?action=unlock');
   };
 
   /**
@@ -655,9 +655,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (diff > IDLE_LIMIT) {
       console.log('タイムアウト実行！');
-      navigator.sendBeacon('/attendance/backend/php/manage_editor.php?action=unlock');
+      navigator.sendBeacon('/attendance-management-app/backend/php/manage_editor.php?action=unlock');
       alert('15分間操作がなかったため、解除しました。');
-      window.location.href = '/attendance/public/pages/teacher/teacher_dashboard.html';
+      window.location.href = '/attendance-management-app/public/pages/teacher/teacher_dashboard.html';
     }
   }, CHECK_INTERVAL);
 });

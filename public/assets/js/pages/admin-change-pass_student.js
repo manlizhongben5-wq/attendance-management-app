@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ============================
   // 学生情報1件取得API
   // ============================
-  fetch(`/attendance/backend/php/get_student_detail.php?id=${studentId}`)
+  fetch(`/attendance-management-app/backend/php/get_student_detail.php?id=${studentId}`)
     .then(res => {
       if (!res.ok) {
         // サーバーエラー内容を確認
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     const response = await fetch(
-      "/attendance/backend/php/update_password.php",
+      "/attendance-management-app/backend/php/update_password.php",
       {
         method: "POST",
         body: formData

@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const API_BASE = '/attendance/backend/php';
+  const API_BASE = '/attendance-management-app/backend/php';
 
   const API = {
     lessons: `${API_BASE}/get_lessons.php`,
