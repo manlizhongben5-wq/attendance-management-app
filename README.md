@@ -1,4 +1,4 @@
-# Attendance-management-system
+# attendance-management-app
 
 ## 概要
 
@@ -154,10 +154,9 @@ Attendance-management-system
 │   └ php
 │
 ├ db
-│   ├ teachers.sql
-│   ├ students.sql
-│   ├ attendances.sql
-│   └ ...
+│   ├ schema.sql
+│   └ demo_data.sql
+│
 │
 ├ README.md
 └ .gitignore
@@ -170,17 +169,135 @@ Attendance-management-system
 
 ## セットアップ
 
-1. XAMPPを起動
-2. Apache / MySQL を開始
-3. db フォルダ内の SQL ファイルを phpMyAdmin からインポート
-4. ブラウザで `public/index.html` にアクセス
+### 1. プロジェクトを配置
+
+本プロジェクトを XAMPP の `htdocs` 配下に配置してください。
+
+例：
+
+```text
+C:\xampp\htdocs\Attendance-management-system
+```
 
 ---
 
-## DB設定
+### 2. XAMPP を起動
 
-`backend/config/db.sample.php` を参考に、
-`db.php` を作成してください。
+XAMPP Control Panel を開き、以下を開始してください。
+
+* Apache
+* MySQL
+
+---
+
+### 3. データベースを作成
+
+ブラウザで phpMyAdmin を開きます。
+
+```text
+http://localhost/phpmyadmin
+```
+
+新しいデータベースを作成してください。
+
+データベース名：
+
+```text
+attendance_management
+```
+
+文字コードは `utf8mb4` を推奨しています。
+
+---
+
+### 4. SQL ファイルをインポート
+
+`db` フォルダ内の以下の SQL ファイルを、上から順番に phpMyAdmin へインポートしてください。
+
+```text
+1. schema.sql
+2. demo_data.sql
+```
+
+* `schema.sql`
+
+  * テーブル作成用
+  * 外部キー制約を含む
+
+* `demo_data.sql`
+
+  * 動作確認用デモデータ
+
+---
+
+### 5. DB 接続設定を作成
+
+`backend/config/db.sample.php` をコピーし、
+`backend/config/db.php` を作成してください。
+
+例：
+
+```text
+db.sample.php → db.php
+```
+
+必要に応じて、DB接続情報を環境に合わせて変更してください。
+
+XAMPP 初期設定の場合は、以下で動作します。
+
+```php
+$host = 'localhost';
+$dbname = 'attendance_management';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+```
+
+---
+
+### 6. アプリへアクセス
+
+ブラウザで以下へアクセスしてください。
+
+```text
+http://localhost/attendance-management-app/public/index.html
+```
+
+---
+
+## 動作確認用アカウント
+
+### 管理者
+
+| ID      | パスワード|
+| ------- | -------- |
+| admin01 | password |
+
+### 教員
+
+| ID        | パスワード|
+| --------- | -------- |
+| teacher01 | password |
+
+### 生徒
+
+| ID        | パスワード|
+| --------- | -------- |
+| student01 | password |
+
+---
+
+## 動作確認環境
+
+* Windows 10
+* XAMPP
+* Apache
+* PHP
+* MariaDB
+* Google Chrome
+
+※ Ubuntu Server（VirtualBox）環境でも動作確認済み
+
 
 ---
 
