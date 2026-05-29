@@ -6,9 +6,9 @@ function getDb(): PDO
 {
     // DB接続設定（サンプル）
     $host = 'localhost';
-    $dbname = 'your_database';
-    $user = 'your_user';
-    $pass = 'your_password';
+    $dbname = 'attendance_management';
+    $user = 'root';
+    $pass = '';
     $charset = 'utf8mb4';
 
     // DSN（接続情報）
