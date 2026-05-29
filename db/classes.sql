@@ -1,5 +1,0 @@
-CREATE TABLE `classes` (
-    `class_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `class_name` VARCHAR(50) NOT NULL,
-    PRIMARY KEY(`class_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
