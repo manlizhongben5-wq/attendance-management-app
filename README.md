@@ -133,7 +133,7 @@
 ## フォルダ構成
 
 ```text
-Attendance-management-system
+attendance-management-app
 │
 ├ public
 │   ├ index.html
@@ -176,7 +176,7 @@ Attendance-management-system
 例：
 
 ```text
-C:\xampp\htdocs\Attendance-management-system
+C:\xampp\htdocs\attendance-management-app
 ```
 
 ---
