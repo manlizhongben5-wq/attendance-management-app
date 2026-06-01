@@ -275,15 +275,15 @@ http://localhost/attendance-management-app/public/index.html
 
 ### 教員
 
-| ID        | パスワード|
-| --------- | -------- |
-| teacher01 | password |
+| ID         | パスワード|
+| ---------- | -------- |
+| 0000000001 | password |
 
 ### 生徒
 
-| ID        | パスワード|
-| --------- | -------- |
-| student01 | password |
+| ID     | パスワード|
+| ------ | -------- |
+| 000001 | password |
 
 ---
 

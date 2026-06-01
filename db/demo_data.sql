@@ -40,8 +40,8 @@ INSERT INTO teachers (
     name,
     is_editor
 ) VALUES
-('teacher01', 'password', 'teacher01', 1),
-('teacher02', 'password', 'teacher02', 0);
+('0000000001', 'password', 'teacher01', 1),
+('0000000002', 'password', 'teacher02', 0);
 
 
 
@@ -111,7 +111,7 @@ INSERT INTO attendances (
     1,
     '2026-05-01',
     1,
-    'teacher01',
+    '0000000001',
     1
 ),
 (
@@ -120,7 +120,7 @@ INSERT INTO attendances (
     1,
     '2026-05-01',
     1,
-    'teacher01',
+    '0000000001',
     2
 ),
 (
@@ -129,7 +129,7 @@ INSERT INTO attendances (
     1,
     '2026-05-01',
     2,
-    'teacher02',
+    '0000000002',
     3
 ),
 (
@@ -138,7 +138,7 @@ INSERT INTO attendances (
     1,
     '2026-05-01',
     2,
-    'teacher02',
+    '0000000002',
     4
 );
 
