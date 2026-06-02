@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const studentIdEl = document.getElementById("student-id");// id="student-id"の要素を取得
   const studentNameEl = document.getElementById("student-name");
   const deleteBtn = document.getElementById("delete-btn");
+  const registerBtn = document.getElementById("submit-btn");
 
   // IDが無ければ処理停止
   if (!studentId) {
@@ -165,5 +166,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   });
+
+  // ============================
+  // 登録処理(コース変更)
+  // ============================
+registerBtn.addEventListener("click", async () => {
+
+  try {
+
+    const courseSelect =
+      document.getElementById("course");
+
+    const formData = new FormData();
+
+    formData.append("student_id", studentId);
+    formData.append("course_id", courseSelect.value);
+
+    const response = await fetch(
+      "/attendance-management-app/backend/php/update_student_course.php",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result.status === "success") {
+      throw new Error(result.message);
+    }
+
+    alert(result.message);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("コース変更に失敗しました");
+  }
+
+});
 
 });
