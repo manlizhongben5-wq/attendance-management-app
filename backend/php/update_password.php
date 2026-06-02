@@ -13,6 +13,7 @@ $pdo = getDb();
 
 // POST受け取り
 $userId = $_POST['user_id'] ?? '';
+$role = $_POST['role'] ?? '';
 $newPassword = $_POST['new_password'] ?? ''; // 新しいパスワード
 $confirmPassword = $_POST['confirm_password'] ?? ''; // 新しいパスワード（確認）
     // 前後空白除去
@@ -82,11 +83,31 @@ $passwordHash = password_hash(
 
 
 // UPDATE
-$sql = "
-UPDATE teachers
-SET password = ?
-WHERE teacher_id = ?
-";
+if ($role === 'teacher') {
+
+    $sql = "
+    UPDATE teachers
+    SET password = ?
+    WHERE teacher_id = ?
+    ";
+
+} elseif ($role === 'student') {
+
+    $sql = "
+    UPDATE students
+    SET password = ?
+    WHERE student_id = ?
+    ";
+
+} else {
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => '対象ユーザー種別が不正です'
+    ]);
+
+    exit;
+}
 
 $stmt = $pdo->prepare($sql);
 
