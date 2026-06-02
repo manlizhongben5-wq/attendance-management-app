@@ -16,8 +16,8 @@ $userId = $_POST['user_id'] ?? '';
 $newPassword = $_POST['new_password'] ?? ''; // 新しいパスワード
 $confirmPassword = $_POST['confirm_password'] ?? ''; // 新しいパスワード（確認）
     // 前後空白除去
-$newPassword = trim($newPassword); 
-$confirmPassword = trim($newPassword);
+$newPassword = trim($newPassword);
+$confirmPassword = trim($confirmPassword);
 
 // 管理者以外アクセス禁止
 if (
