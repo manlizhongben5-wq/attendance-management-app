@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!confirmDelete) return;
 
-    fetch("/attendance/backend/php/delete_student.php", {
+    fetch("/attendance-management-app/backend/php/delete_student.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
