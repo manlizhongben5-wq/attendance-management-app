@@ -28,7 +28,8 @@ try {
     $sql = "
         SELECT
             student_id,
-            name AS student_name
+            name AS student_name,
+            class_id
         FROM students 
         WHERE student_id = :id
         LIMIT 1
