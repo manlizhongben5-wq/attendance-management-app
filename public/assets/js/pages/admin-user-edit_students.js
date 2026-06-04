@@ -22,14 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 数値に変換
-  const studentIdNum = Number(studentId);
-
-  if (Number.isNaN(studentIdNum)) {
-    alert("IDが不正です");
-    return;
-  }
-
   // ============================
   // 学生情報1件取得API
   // ============================
@@ -139,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        student_id: studentIdNum // 数値で送る
+        student_id: studentId  // 文字列型に変換し、phpに渡している。
       })
     })
      .then(res => {

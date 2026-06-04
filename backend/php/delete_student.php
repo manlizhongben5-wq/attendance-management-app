@@ -24,17 +24,12 @@ try {
         throw new Exception("リクエスト形式が不正です");
     }
 
+    // 空白を削除
+    $studentId = trim((string)($input['student_id'] ?? ''));
+
     // student_id確認
-    if (!isset($input['student_id'])) {
+    if ($studentId === '') {
         throw new Exception("IDが指定されていません");
-    }
-
-    // int型へ変換
-    $studentId = (int)$input['student_id'];
-
-    // 不正値チェック
-    if ($studentId <= 0) {
-        throw new Exception("IDが不正です");
     }
 
     // ============================
@@ -47,11 +42,11 @@ try {
         LIMIT 1
     ";
     $checkStmt = $pdo->prepare($checkSql);
-    $checkStmt->bindValue(':id', $studentId, PDO::PARAM_INT);
+    $checkStmt->bindValue(':id', $studentId, PDO::PARAM_STR);
     $checkStmt->execute();
 
     // 存在しない場合
-    if ($checkStmt->fetchColumn() == 0) {
+    if ($checkStmt->fetchColumn() === false) {
         throw new Exception("対象の学生が存在しません");
     }
 
@@ -65,7 +60,7 @@ try {
     // ============================
     $deleteSql = "DELETE FROM students WHERE student_id = :id";
     $deleteStmt = $pdo->prepare($deleteSql);
-    $deleteStmt->bindValue(':id', $studentId, PDO::PARAM_INT);
+    $deleteStmt->bindValue(':id', $studentId, PDO::PARAM_STR);
     $deleteStmt->execute();
 
     // 削除件数確認
