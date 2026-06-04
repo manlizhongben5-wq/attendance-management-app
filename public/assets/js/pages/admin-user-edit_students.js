@@ -183,8 +183,8 @@ registerBtn.addEventListener("click", async () => {
     );
 
     const result = await response.json();
-
-    if (!result.status === "success") {
+    
+    if (result.status !== "success") {
       throw new Error(result.message);
     }
 
