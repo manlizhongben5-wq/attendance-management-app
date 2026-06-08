@@ -49,6 +49,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  
+  // ====================================
+  // コース選択プルダウンにコース一覧を取得
+  // ====================================
+  async function loadClasses() {
+
+    try {
+
+      const response = await fetch(
+        "/attendance/backend/php/get_classes.php"
+      );
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error("クラス取得失敗");
+      }
+
+      const select = document.getElementById("course");
+
+      // 初期化
+      select.innerHTML =
+        '<option value="">選択してください</option>';
+
+      result.classes.forEach(classItem => {
+
+        const option = document.createElement("option");
+
+        option.value = classItem.class_id;
+        option.textContent = classItem.class_name;
+
+        // 現在所属コースなら選択状態にする
+        if (
+            Number(classItem.class_id) ===
+            Number(window.currentClassId)
+        ) {
+            option.selected = true;
+        }
+
+        select.appendChild(option);
+
+      });
+
+    } catch (error) {
+
+      console.error("クラス取得エラー:", error);
+
+      alert("クラス一覧の取得に失敗しました");
+    }
+  }
+
+
+
   // =============================
   // 入力値取得
   // =============================
@@ -142,4 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 初期表示反映
   toggleCourseArea();
+  
+  // コース一覧取得
+  loadClasses();
 });
