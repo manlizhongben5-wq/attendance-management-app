@@ -1,23 +1,65 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
-    // =============================
+
+  // =============================
   // 要素取得
   // =============================
   const userTypeRadios = document.querySelectorAll('input[name="userType"]');
   const courseArea = document.getElementById("courseArea");
   const course = document.getElementById("course");
 
-  const userId = document.getElementById("userId");
-  const userName = document.getElementById("userName");
+  const userIdInput = document.getElementById("number");
+  const userNameInput = document.getElementById("name");
+  const yearArea = document.getElementById("yearArea");
   const password = document.getElementById("password");
   const registerBtn = document.getElementById("registerBtn");
+
+  const enrollmentYear = document.getElementById("enrollmentYear");
+
+  // =============================
+  // URLパラメータ取得（1回だけ）
+  // =============================
+  const params = new URLSearchParams(window.location.search);
+  const initialRole = params.get("role") ?? "teacher";
+
+  // =============================
+  // ラジオボタン初期化
+  // =============================
+  const radio = document.querySelector(
+    `input[name="userType"][value="${initialRole}"]`
+  );
+
+  if (radio) radio.checked = true;
+
+  // =============================
+  // 現在のroleを取得する
+  // =============================
+  function getCurrentRole() {
+    const selected = document.querySelector('input[name="userType"]:checked');
+    return selected ? selected.value : "teacher";
+  }
+  // =============================
+  // 戻るリンク
+  // =============================
+  function updateBackLink() {
+    const role = getCurrentRole();
+
+    const backLink = document.getElementById("backLink");
+
+    if (backLink) {
+      backLink.href =
+        `/attendance-management-app/public/pages/admin/admin_user-management.html?role=${role}`;
+    }
+  }
 
   // 必須要素がなければ終了
   if (
     userTypeRadios.length === 0 ||
     !courseArea ||
-    !userId ||
-    !userName ||
+    !course ||
+    !userIdInput ||
+    !userNameInput ||
+    !yearArea ||
+    !enrollmentYear ||
     !password ||
     !registerBtn
   ) {
@@ -28,28 +70,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // コース表示切替
   // =============================
   function toggleCourseArea() {
-    
-    const selected = document.querySelector('input[name="userType"]:checked');
+
+    const selected = document.querySelector(
+      'input[name="userType"]:checked'
+    );
 
     if (!selected) return;
-
-    console.log("選択中:", selected.value);
 
     // 学生なら表示
     if (selected.value === "student") {
       courseArea.classList.remove("hidden");
+      yearArea.classList.remove("hidden");
     }
     // 教員なら非表示
     else if (selected.value === "teacher") {
       courseArea.classList.add("hidden");
+      yearArea.classList.add("hidden");
 
-      if (course) {
-        course.value = "";
-      }
+      course.value = "";
+      enrollmentYear.value = "";
     }
   }
 
-  
   // ====================================
   // コース選択プルダウンにコース一覧を取得
   // ====================================
@@ -58,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
 
       const response = await fetch(
-        "/attendance/backend/php/get_classes.php"
+        "/attendance-management-app/backend/php/get_classes.php"
       );
 
       const result = await response.json();
@@ -82,10 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 現在所属コースなら選択状態にする
         if (
-            Number(classItem.class_id) ===
-            Number(window.currentClassId)
+          Number(classItem.class_id) ===
+          Number(window.currentClassId)
         ) {
-            option.selected = true;
+          option.selected = true;
         }
 
         select.appendChild(option);
@@ -101,19 +143,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-
   // =============================
   // 入力値取得
   // =============================
   function getFormData() {
-    const selected = document.querySelector('input[name="userType"]:checked');
+    const selected = document.querySelector(
+    'input[name="userType"]:checked'
+  );
 
     return {
-      role: selected ? selected.value : "",
-      id: userId.value.trim(),
-      name: userName.value.trim(),
+      role: selected.value,
+      id: userIdInput.value.trim(),
+      name: userNameInput.value.trim(),
       password: password.value.trim(),
-      course: course ? course.value : ""
+      course: course.value,
+      enrollmentYear: enrollmentYear.value.trim()
     };
   }
 
@@ -128,13 +172,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!data.id) {
       alert("学生・教員番号を入力してください");
-      userId.focus();
+      userIdInput.focus();
       return false;
     }
 
     if (!data.name) {
       alert("名前を入力してください");
-      userName.focus();
+      userNameInput.focus();
       return false;
     }
 
@@ -146,7 +190,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (data.role === "student" && !data.course) {
       alert("コースを選択してください");
-      if (course) course.focus();
+
+      if (course) {
+        course.focus();
+      }
+
+      return false;
+    }
+
+    if (data.role === "student" && !data.enrollmentYear) {
+      alert("入学年度を入力してください");
+      enrollmentYear.focus();
+      return false;
+    }
+
+    if (data.role === "student" &&
+      !/^\d{4}$/.test(data.enrollmentYear)
+    ) {
+      alert("入学年度は4桁で入力してください");
+      enrollmentYear.focus();
       return false;
     }
 
@@ -154,9 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =============================
-  // 仮登録処理
+  // 登録処理
   // =============================
-  function registerUser() {
+  async function registerUser() {
+
     const formData = getFormData();
 
     if (!validateForm(formData)) {
@@ -168,34 +231,69 @@ document.addEventListener("DOMContentLoaded", () => {
       name: formData.name,
       role: formData.role,
       password: formData.password,
-      course: formData.role === "student" ? formData.course : null
+      course: formData.role === "student"
+        ? formData.course
+        : null,
+      enrollmentYear: formData.role === "student"
+        ? formData.enrollmentYear
+        : null
     };
 
-    console.log("登録データ:", newUser);
+    try {
 
-    sessionStorage.setItem("tempUser", JSON.stringify(newUser));
+      const response = await fetch(
+        "/attendance-management-app/backend/php/add_user.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newUser)
+        }
+      );
 
-    alert("登録しました");
+      const result = await response.json();
 
-    if (formData.role === "teacher") {
-      window.location.href = "/admin-user-list_teacher.html";
-    } else {
-      window.location.href = "/admin-user-list_student.html";
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      alert("登録しました");
+
+      // 登録成功後は、現在選択中のroleに戻す
+      const role = getCurrentRole();
+
+      window.location.href =
+        `/attendance-management-app/public/pages/admin/admin_user-management.html?role=${role}`;
+
+    } catch (error) {
+
+      console.error("登録エラー");
+
+      console.error(error);
+
+      alert(error.message);
+
     }
   }
 
   // =============================
-  // イベント設定
+  // ラジオ変更時
   // =============================
-  userTypeRadios.forEach((radio) => {
-    radio.addEventListener("change", toggleCourseArea);
+  userTypeRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      toggleCourseArea();
+      updateBackLink();
+    });
   });
 
   registerBtn.addEventListener("click", registerUser);
 
   // 初期表示反映
   toggleCourseArea();
-  
+
+  updateBackLink();
+
   // コース一覧取得
   loadClasses();
 });

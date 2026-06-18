@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 error_log('get_lessons.php called');
 
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ .'/../config/db.php';
 
 
 

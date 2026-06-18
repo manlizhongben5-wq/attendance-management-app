@@ -8,7 +8,7 @@ header("Content-Type: application/json; charset=UTF-8");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ .'/../config/db.php';
 
 try {
     $pdo = getDb();
@@ -35,7 +35,7 @@ try {
     ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+    $stmt->bindValue(':id', $id, PDO::PARAM_STR);
     $stmt->execute();
 
     $teacher = $stmt->fetch(PDO::FETCH_ASSOC);

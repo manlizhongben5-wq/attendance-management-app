@@ -5,15 +5,45 @@ document.addEventListener("DOMContentLoaded", () => {
   // 要素取得
   // =============================
 
+  // =============================
+  // URLパラメータから初期role設定
+  // =============================
+  const params = new URLSearchParams(window.location.search);
+  const initialRole = params.get("role");
+
+  if (initialRole === "teacher" || initialRole === "student") {
+
+    const radio = document.querySelector(
+      `input[name="userType"][value="${initialRole}"]`
+    );
+
+    if (radio) {
+      radio.checked = true;
+    }
+  }
+
   // 「教員 / 学生」のラジオボタンをすべて取得
   const userTypeRadios = document.querySelectorAll('input[name="userType"]');
 
   // テーブルのtbody（データを入れる場所）を取得
   const tableBody = document.getElementById("userTableBody");
 
+  // 追加ボタンの情報取得
+  const addUserBtn = document.getElementById("addUserBtn");
+
   // 必要な要素がなければ処理を止める（エラー防止）
   if (!tableBody || userTypeRadios.length === 0) {
     return;
+  }
+
+  // =============================
+  // 現在のroleを取得する
+  // =============================
+  function getCurrentRole() {
+    const selected = document.querySelector(
+      'input[name="userType"]:checked'
+    );
+    return selected ? selected.value : "teacher";
   }
 
   // =============================
@@ -145,11 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!target) return;
 
     // 現在選択されているユーザー種別（教員 or 学生）
-    const selected = document.querySelector(
-      'input[name="userType"]:checked'
-    );
-
-    const type = selected?.value;
+    const type = getCurrentRole();
 
     // ボタンに埋め込まれたユーザーIDを取得
     const userId = target.dataset.id;
@@ -164,9 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ユーザー種別によって遷移先を変更
       if (type === "teacher") {
-        location.href = `./admin_user-edit_teacher.html?id=${userId}`;  // ユーザー追加(教員)画面へ
+        location.href = 
+          `./admin_user-edit_teacher.html?id=${userId}&role=${type}`;  // ユーザー追加(教員)画面へ
       } else {
-        location.href = `./admin_user-edit_student.html?id=${userId}`;  // ユーザー追加(学生)画面へ
+        location.href = 
+          `./admin_user-edit_student.html?id=${userId}&role=${type}`;  // ユーザー追加(学生)画面へ
       }
     }
 
@@ -174,7 +202,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // パスワード変更ボタン
     // =============================
     if (target.classList.contains("password-btn")) {
-      location.href = `./admin_change-pass.html?user_type=${type}&id=${userId}`;
+      location.href = 
+        `./admin_change-pass.html?id=${userId}&role=${type}`;
     }
   });
 
@@ -182,11 +211,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // 初期表示（ページ読み込み時）
   // =============================
 
-  // 最初に選択されているラジオボタンを取得
-  const checkedRadio = document.querySelector('input[name="userType"]:checked');
-
   // もし存在すれば、その種類のデータを表示
-  if (checkedRadio) {
-    loadUsers(checkedRadio.value);
+  loadUsers(getCurrentRole());
+
+  // =============================
+  // ユーザー追加ボタン
+  // =============================
+  if (addUserBtn) {
+
+    addUserBtn.addEventListener("click", () => {
+
+      const role = getCurrentRole();
+
+      location.href =
+        `./admin_user-add.html?role=${role}`;
+    });
   }
+
 });

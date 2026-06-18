@@ -6,7 +6,7 @@ session_start();
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ .'/../config/db.php';
 // require_once __DIR__ . '/auth_check.php'; // 必要なら有効化
 
 /**

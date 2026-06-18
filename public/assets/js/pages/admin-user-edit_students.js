@@ -1,3 +1,8 @@
+// =============================
+// 共通モジュール読み込み
+// =============================
+ import { getCurrentRole, withRole } from "../common/role.js";
+
 // HTMLの読み込みが完了してから処理を開始する
 document.addEventListener("DOMContentLoaded", () => {
   // ============================
@@ -7,8 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // ============================
   // URLから学生IDを取得
   // ============================
+
   const params = new URLSearchParams(window.location.search);
   const studentId = params.get("id");
+
 
   // DOM取得
   const studentIdEl = document.getElementById("student-id");// id="student-id"の要素を取得
@@ -20,6 +27,19 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!studentId) {
     alert("IDが取得できません");
     return;
+  }
+
+  // =============================
+  // 前画面の同じroleに戻る
+  // =============================
+  const backBtn = document.getElementById("backBtn");
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = withRole(
+        "/attendance-management-app/public/pages/admin/admin_user-management.html"
+      );
+    });
   }
 
   // ============================
@@ -150,7 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       alert("削除しました");
-      window.location.href = "admin_user-management.html";
+      window.location.href = withRole(
+        "/attendance-management-app/public/pages/admin/admin_user-management.html"
+      );
     })
     .catch(err => {
       console.error("削除エラー:", err);
@@ -183,12 +205,16 @@ registerBtn.addEventListener("click", async () => {
     );
 
     const result = await response.json();
-    
+
     if (result.status !== "success") {
       throw new Error(result.message);
     }
 
     alert(result.message);
+
+    window.location.href = withRole(
+      "/attendance-management-app/public/pages/admin/admin_user-management.html"
+    );
 
   } catch (error) {
 

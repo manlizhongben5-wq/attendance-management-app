@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ============================
   const params = new URLSearchParams(window.location.search);
   const teacherId = params.get("id");
+  const role = params.get("role") ?? "teacher";
 
   // DOM取得
   const teacherIdEl = document.getElementById("teacher-id");// id="teacher-id"の要素を取得
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       alert("削除しました");
-      window.location.href = "admin_user-management.html";
+      window.location.href = `admin_user-management.html?role=${role}`;
     })
     .catch(err => {
       console.error("削除エラー:", err);

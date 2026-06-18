@@ -26,7 +26,7 @@
   <header class="app-header">
 
     <!-- 左の戻る矢印 -->
-    <a href="admin_user-management.html">
+    <a id="backLink">
       <button class="back-btn" type="button" aria-label="戻る">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -101,6 +101,19 @@
           </div>
         </div>
 
+        <div id="yearArea" class="field hidden">
+          <label for="enrollmentYear" class="field-label">
+            入学年度<span class="req">*</span>
+          </label>
+
+          <input
+            id="enrollmentYear"
+            type="text"
+            maxlength="4"
+            class="text-input"
+          >
+        </div>
+
         <!-- パスワード入力 -->
         <label for="password" class="field-label">
           パスワード<span class="req">*</span>
@@ -126,7 +139,7 @@
         </div>
 
         <div class="actions">
-          <button id="registerBtn" class="submit-btn">登録</button>
+          <button id="registerBtn" class="submit-btn" type="button">登録</button>
         </div>
       </form>
     </section>

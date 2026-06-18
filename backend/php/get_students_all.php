@@ -9,7 +9,7 @@ header("Content-Type: application/json; charset=UTF-8");
 // ==========================================
 // DB接続ファイル読み込み
 // ==========================================
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ .'/../config/db.php';
 
 try {
 
